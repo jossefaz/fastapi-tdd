@@ -1,5 +1,7 @@
 version: '3.7'
 
+
+
 services:
   web:
     build: ./src
@@ -8,3 +10,17 @@ services:
       - ./src/:/usr/src/app/
     ports:
       - 8002:8000
+    environment:
+      - DATABASE_URL=postgresql://postgres:secret@db/tdd_fastapi
+  db:
+    image: postgres:12.1-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=tdd_fastapi
+    ports:
+      - 5432:5432
+volumes:
+  postgres_data:
